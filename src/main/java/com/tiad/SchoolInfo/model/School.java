@@ -17,7 +17,7 @@ public class School {
 
 	private String name;
 
-	private String postalIndex;
+	private String postalCode;
 
 	public ObjectId getId() {
 		return id;
@@ -31,17 +31,17 @@ public class School {
 		this.name = name;
 	}
 
-	public String getPostalIndex() {
-		return postalIndex;
+	public String getPostalCode() {
+		return postalCode;
 	}
 
-	public void setPostalIndex(String postalIndex) {
-		this.postalIndex = postalIndex;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 
 	@Override
 	public String toString() {
-		return "School [id=" + id + ", name=" + name + ", postalIndex="
-				+ postalIndex + "]";
+		return "School [id=" + id + ", name=" + name + ", postalCode="
+				+ postalCode + "]";
 	}
 }

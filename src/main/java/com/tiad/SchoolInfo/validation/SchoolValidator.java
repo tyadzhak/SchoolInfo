@@ -13,7 +13,7 @@ import com.tiad.SchoolInfo.repository.SchoolRepository;
 public class SchoolValidator implements Validator {
 
 	private final static String SCHOOL_NAME = "name";
-	private final static String SCHOOL_POSTAL_INDEX = "postalIndex";
+	private final static String SCHOOL_POSTAL_CODE = "postalCode";
 
 	@Autowired
 	SchoolRepository schoolRepository;
@@ -28,8 +28,8 @@ public class SchoolValidator implements Validator {
 		School school = (School) target;
 
 		ValidationUtils.rejectIfEmpty(errors, SCHOOL_NAME, "school.name.empty");
-		ValidationUtils.rejectIfEmpty(errors, SCHOOL_POSTAL_INDEX,
-				"school.postalIndex.empty");
+		ValidationUtils.rejectIfEmpty(errors, SCHOOL_POSTAL_CODE,
+				"school.postalCode.empty");
 
 		/*
 		School[] schs = schoolRepository.findByName(school.getName());
@@ -37,10 +37,10 @@ public class SchoolValidator implements Validator {
 			errors.rejectValue(SCHOOL_NAME, "school.name.alreadyExist");
 		}
 
-		schs = schoolRepository.findByPostalIndex(school.getPostalIndex());
+		schs = schoolRepository.findByPostalCode(school.getPostalCode());
 		if (schs.length != 0) {
-			errors.rejectValue(SCHOOL_POSTAL_INDEX,
-					"school.postalIndex.alreadyExist");
+			errors.rejectValue(SCHOOL_POSTAL_CODE,
+					"school.postalCode.alreadyExist");
 		}
 		*/
 	}

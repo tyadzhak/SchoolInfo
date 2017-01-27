@@ -1,38 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>List page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>School Manager</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<spring:url value="/resources/css/home.css"/>" type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-	<h1>List page</h1>
-	<table style="text-align: center;" border="1px" cellpadding="0"
-		cellspacing="0">
-		<thead>
-			<tr>
-				<th width="25px">id</th>
-				<th width="150px">name</th>
-				<th width="25px">postalIndex</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="school" items="${schoolList}">
+
+	<jsp:include page="../pages/fragments/header.jsp"></jsp:include>
+
+	<div class="container">
+
+		<h2>Schools</h2>
+		<table class="table table-hover">
+			<tbody>
 				<tr>
-					<td>${school.id}</td>
-					<td>${school.name}</td>
-					<td>${school.postalIndex}</td>
-					<td><a
-						href="${pageContext.request.contextPath}/school/edit/${school.id}.html">Edit</a><br />
-						<a
-						href="${pageContext.request.contextPath}/school/delete/${school.id}.html">Delete</a><br />
-					</td>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Postal Code</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<a href="${pageContext.request.contextPath}/">Home page</a>
+				<c:forEach items="${schoolList}" var="school">
+					<tr>
+						<td>${school.id}</td>
+						<td><a
+							href="<spring:url 
+							value="/school/edit/${school.id}"/>">${school.name}</a></td>
+						<td>${school.postalCode}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+
+		<button type="button" class="btn btn-default"
+			onclick="location.href='<spring:url value="/school/create"/>'">Add</button>
+	</div>
+
+
+
 </body>
 </html>

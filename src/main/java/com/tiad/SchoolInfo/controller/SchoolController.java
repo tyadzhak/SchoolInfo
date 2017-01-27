@@ -41,7 +41,7 @@ public class SchoolController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String schoolListPage(Model model) {
 		try {
-			School[] schoolList = schoolService.findAll();
+			School[] schoolList = schoolService.findAllByOrderByName();
 			model.addAttribute("schoolList", schoolList);
 			return "school-list";
 		} catch (Exception e) {
@@ -66,9 +66,9 @@ public class SchoolController {
 
 			schoolService.create(school);
 		
-			School[] schoolList = schoolService.findAll();
+			School[] schoolList = schoolService.findAllByOrderByName();
 			model.addAttribute("schoolList", schoolList);		
-			return "school-list";
+			return "redirect:list";
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw e;
@@ -90,12 +90,11 @@ public class SchoolController {
 
 		if (result.hasErrors())
 			return "school-edit";
-
-		schoolService.update(school);
-		
-		School[] schoolList = schoolService.findAll();
+	
+		schoolService.update(id, school);
+		School[] schoolList = schoolService.findAllByOrderByName();
 		model.addAttribute("schoolList", schoolList);
-		return "school-list";
+		return "redirect:list";
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -103,9 +102,9 @@ public class SchoolController {
 
 		schoolService.delete(id);
 	
-		School[] schoolList = schoolService.findAll();
+		School[] schoolList = schoolService.findAllByOrderByName();
 		model.addAttribute("schoolList", schoolList);
-		return "school-list";
+		return "redirect:list";
 	}
 
 }

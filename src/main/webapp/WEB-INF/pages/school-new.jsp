@@ -1,36 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>New page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>School Manager</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<spring:url value="/resources/css/home.css"/>" type="text/css"/>
+	<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="<spring:url value="/resources/js/bootstrap-select.min.js"/>"></script>
+
 </head>
 <body>
-	<h1>New page</h1>
-	<form:form method="POST" commandName="school"
-		action="${pageContext.request.contextPath}/school/create.html">
-		<table>
-			<tbody>
-				<tr>
-					<td>name:</td>
-					<td><form:input path="name" /></td>
-					<td><form:errors path="name" cssStyle="color: red;" /></td>
-				</tr>
-				<tr>
-					<td>post index:</td>
-					<td><form:input path="postalIndex" /></td>
-					<td><form:errors path="postalIndex" cssStyle="color: red;" /></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Create" /></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</form:form>
-	<a href="${pageContext.request.contextPath}/">Home page</a>
+	<jsp:include page="../pages/fragments/header.jsp"></jsp:include>
+
+	<div class="container">
+		<div class="row">
+			<spring:url value="/school/create" var="formUrl" />
+			<form:form modelAttribute="school" action="${formUrl }"
+				method="post" cssClass="col-md-8 col-md-offset-2">
+
+				<div class="form-group">
+					<label for="school-name">Name</label>
+					<form:input id="school-name" cssClass="form-control" path="name" />
+					<form:errors path="name" />
+				</div>
+				
+				<div class="form-group">
+					<label for="school-postalCode">Postal Code</label>
+					<form:input id="school-postalCode" cssClass="form-control" path="postalCode" />
+					<form:errors path="postalCode" />
+				</div>
+
+				<button type="submit" class="btn btn-default">Submit</button>
+
+			</form:form>
+		</div>
+	</div>
 </body>
 </html>

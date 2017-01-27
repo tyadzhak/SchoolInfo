@@ -29,15 +29,21 @@ public class SchoolService {
 		return deletedSchool;
 	}
 
+	/*
 	public School[] findAll() {
 		return schoolRepository.findAll().toArray(new School[0]);
+	}*/
+	
+	public School[] findAllByOrderByName() {
+		return schoolRepository.findAllByOrderByName().toArray(new School[0]);
 	}
 
-	public School update(School school){
-		School updatedSchool = schoolRepository.findOne(school.getId());
+	public School update(ObjectId id, School school){
+		School updatedSchool = schoolRepository.findOne(id);
 				
 		updatedSchool.setName(school.getName());
-		return updatedSchool;
+		updatedSchool.setPostalCode(school.getPostalCode());
+		return schoolRepository.save(updatedSchool);
 	}
 
 	public boolean exists(ObjectId id) {

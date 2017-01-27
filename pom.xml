@@ -104,7 +104,6 @@
 		</dependency>
 	</dependencies>
 
-
 	<build>
 		<finalName>SchoolInfo</finalName>
 		<plugins>
@@ -116,8 +115,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
-					<source>${ajava.version}</source>
-					<target>${ajava.version}</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>

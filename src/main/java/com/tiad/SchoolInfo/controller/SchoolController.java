@@ -1,97 +1,111 @@
 package com.tiad.SchoolInfo.controller;
 
+import javax.validation.Valid;
+
+import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tiad.SchoolInfo.common.loggin.Logging;
 import com.tiad.SchoolInfo.model.School;
 import com.tiad.SchoolInfo.service.SchoolService;
+import com.tiad.SchoolInfo.validation.SchoolValidator;
 
 @Controller
 @RequestMapping("/school")
 public class SchoolController {
-	
+	@Logging(SchoolController.class)
+	Logger logger;
+
 	@Autowired
 	private SchoolService schoolService;
-	
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String newSchoolPage(Model model) {
-		model.addAttribute("newSchool", new School());
-		return "school-new";
-	}
-/*
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ModelAndView createNewSchool(
-			@ModelAttribute @Valid SchoolEntity school, BindingResult result,
-			final RedirectAttributes redirectAttributes) {
+	@Autowired
+	private SchoolValidator schoolValidator;
 
-		if (result.hasErrors())
-			return new ModelAndView("school-new");
-
-		ModelAndView mav = new ModelAndView();
-		String message = "New school " + school.getName()
-				+ " was successfully created.";
-
-		schoolService.create(school);
-		mav.setViewName("redirect:/index.html");
-
-		redirectAttributes.addFlashAttribute("message", message);
-		return mav;
+	@InitBinder
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(schoolValidator);
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView schoolListPage() {
-		ModelAndView mav = new ModelAndView("school-list");
-		SchoolEntity[] schoolList = schoolService.findAll();
-		mav.addObject("schoolList", schoolList);
-		return mav;
+	public String schoolListPage(Model model) {
+		try {
+			School[] schoolList = schoolService.findAll();
+			model.addAttribute("schoolList", schoolList);
+			return "school-list";
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String newSchoolPage(Model model) {
+		model.addAttribute("school", new School());
+		return "school-new";
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String createNewSchool(@ModelAttribute @Valid School school,
+			BindingResult result, Model model) {
+
+		try {
+			if (result.hasErrors())
+				return "school-new";
+
+			schoolService.create(school);
+		
+			School[] schoolList = schoolService.findAll();
+			model.addAttribute("schoolList", schoolList);		
+			return "school-list";
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
+
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public ModelAndView editSchoolPage(@PathVariable Long id) {
-		ModelAndView mav = new ModelAndView("school-edit");
-		SchoolEntity school = schoolService.findById(id);
-		mav.addObject("school", school);
-		return mav;
+	public String editSchoolPage(@PathVariable ObjectId id, Model model) {
+		School school = schoolService.findById(id);
+		model.addAttribute("school", school);
+		return "school-edit";
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-	public ModelAndView editSchool(@ModelAttribute @Valid SchoolEntity school,
-			BindingResult result, @PathVariable Integer id,
-			final RedirectAttributes redirectAttributes) {
+	public String editSchool(@ModelAttribute @Valid School school,
+			BindingResult result, @PathVariable ObjectId id,
+			Model model) {
 
 		if (result.hasErrors())
-			return new ModelAndView("school-edit");
-
-		ModelAndView mav = new ModelAndView("redirect:/index.html");
-		String message = "School was successfully updated.";
+			return "school-edit";
 
 		schoolService.update(school);
-
-		redirectAttributes.addFlashAttribute("message", message);
-		return mav;
+		
+		School[] schoolList = schoolService.findAll();
+		model.addAttribute("schoolList", schoolList);
+		return "school-list";
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteSchool(@PathVariable Long id,
-			final RedirectAttributes redirectAttributes) {
+	public String deleteSchool(@PathVariable ObjectId id, Model model) {
 
-		ModelAndView mav = new ModelAndView("redirect:/index.html");
-
-		SchoolEntity school = schoolService.delete(id);
-		String message = "The school " + school.getName()
-				+ " was successfully deleted.";
-
-		redirectAttributes.addFlashAttribute("message", message);
-		return mav;
+		schoolService.delete(id);
+	
+		School[] schoolList = schoolService.findAll();
+		model.addAttribute("schoolList", schoolList);
+		return "school-list";
 	}
-	 */
+
 }

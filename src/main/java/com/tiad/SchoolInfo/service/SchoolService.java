@@ -1,5 +1,6 @@
 package com.tiad.SchoolInfo.service;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,14 +19,14 @@ public class SchoolService {
 		return schoolRepository.save(school);
 	}
 	
-	public School findById(long id) {
+	public School findById(ObjectId id) {
 		return schoolRepository.findOne(id);
 	}
 
-	public boolean delete(long id){
+	public School delete(ObjectId id){
 		School deletedSchool = schoolRepository.findOne(id);	
 		schoolRepository.delete(deletedSchool);
-		return !exists(id);
+		return deletedSchool;
 	}
 
 	public School[] findAll() {
@@ -39,7 +40,7 @@ public class SchoolService {
 		return updatedSchool;
 	}
 
-	public boolean exists(long id) {
+	public boolean exists(ObjectId id) {
 		return schoolRepository.exists(id);
 	}
 }

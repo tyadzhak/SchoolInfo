@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>School Manager</title>
+<title>Subject</title>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -28,36 +28,26 @@
 
 	<div class="container">
 		<div class="row">
-			<spring:url value="/school/edit" var="formUrl" />
-			<form:form modelAttribute="school" action="${formUrl}/${school.id}"
+			<spring:url value="/subject/edit" var="formUrl" />
+			<form:form modelAttribute="subject" action="${formUrl}/${subject.id}"
 				method="post" cssClass="col-md-8 col-md-offset-2">
 
 				<div class="form-group">
-					<label for="school-id">Id</label>
-					<form:input id="school-id" cssClass="form-control" path="id"
+					<label for="subject-id">Id</label>
+					<form:input id="subject-id" cssClass="form-control" path="id"
 						disabled="true" />
 					<form:errors path="name" />
 				</div>
 
 				<div class="form-group">
-					<label for="school-name">Name</label>
-					<form:input id="school-name" cssClass="form-control" path="name" />
+					<label for="subject-name">Name</label>
+					<form:input id="subject-name" cssClass="form-control" path="name" />
 					<form:errors path="name" />
 				</div>
 
-				<div class="form-group">
-					<label for="school-postalCode">Postal Code</label>
-					<form:input id="school-postalCode" cssClass="form-control"
-						path="postalCode" />
-					<form:errors path="postalCode" />
-				</div>
-				
-				<button type="button" class="btn btn-default"
-					onclick="location.href='<spring:url value="/school/edit/${school.id}/schoolClass"/>'">School Classes</button>
-
 				<button type="submit" class="btn btn-default">Submit</button>
 				<button type="button" class="btn btn-default"
-					onclick="location.href='<spring:url value="/school/delete/${school.id}"/>'">Delete</button>
+					onclick="location.href='<spring:url value="/subject/delete/${subject.id}"/>'">Delete</button>
 
 			</form:form>
 		</div>

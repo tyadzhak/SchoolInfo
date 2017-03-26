@@ -1,16 +1,19 @@
 package com.tiad.SchoolInfo.model;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 public class School {
+	/*
 	public School() {
 
 	}
 
 	public School(String name) {
 		this.name = name;
-	}
+	}*/
 
 	@Id
 	private ObjectId id;
@@ -18,6 +21,8 @@ public class School {
 	private String name;
 
 	private String postalCode;
+	
+	//private List<SchoolClass> schoolClass;
 
 	public ObjectId getId() {
 		return id;
@@ -41,7 +46,18 @@ public class School {
 
 	@Override
 	public String toString() {
-		return "School [id=" + id + ", name=" + name + ", postalCode="
-				+ postalCode + "]";
+		return "School [id=" + id + ", name=" + name + ", postalCode=" + postalCode + "]";
 	}
+
+	/*
+	public List<SchoolClass> getSchoolClass() {
+		return schoolClass;
+	}
+
+	public void setSchoolClass(List<SchoolClass> schoolClass) {
+		this.schoolClass = schoolClass;
+	}
+*/
+
+
 }

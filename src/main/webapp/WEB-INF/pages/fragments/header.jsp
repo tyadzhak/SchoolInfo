@@ -11,6 +11,8 @@
 			<li><a href="#">Home</a></li>
 
 			<li><a href=<spring:url value="/school/list"/>>Schools</a></li>
+			<!-- <li><a href=<spring:url value="/subject/list"/>>Subjects</a></li> -->
+			<!-- <li><a href=<spring:url value="/schoolClass/list"/>>School Classes</a></li> -->
 
 		</ul>
 

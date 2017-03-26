@@ -1,10 +1,14 @@
 package com.tiad.SchoolInfo.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,10 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tiad.SchoolInfo.common.loggin.Logging;
 import com.tiad.SchoolInfo.model.School;
+import com.tiad.SchoolInfo.model.SchoolClass;
 import com.tiad.SchoolInfo.service.SchoolService;
 import com.tiad.SchoolInfo.validation.SchoolValidator;
 
-@Controller
+@Controller()
 @RequestMapping("/school")
 public class SchoolController {
 	@Logging(SchoolController.class)
@@ -31,6 +36,7 @@ public class SchoolController {
 	private SchoolService schoolService;
 
 	@Autowired
+	//@Qualifier("schoolValidator")
 	private SchoolValidator schoolValidator;
 
 	@InitBinder
@@ -73,7 +79,6 @@ public class SchoolController {
 			logger.error(e.getMessage(), e);
 			throw e;
 		}
-
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -95,6 +100,16 @@ public class SchoolController {
 		School[] schoolList = schoolService.findAllByOrderByName();
 		model.addAttribute("schoolList", schoolList);
 		return "redirect:/school/list";
+	}
+	
+	@RequestMapping(value = "/edit/{id}/schoolClass", method = RequestMethod.GET)
+	public String editSchoolClassPage(@PathVariable ObjectId id, Model model, HttpServletRequest request) {
+		System.out.println("debug");
+		List<SchoolClass> schoolClass = schoolService.findSchoolClassById(id);
+		request.setAttribute("schoolClass", schoolClass);
+		request.setAttribute("schoolId", id);
+		return "redirect:/schoolClass/list";
+		//return "schoolClass-list";
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

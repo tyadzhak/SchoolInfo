@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>School Manager</title>
+<title>School Class</title>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -28,36 +28,26 @@
 
 	<div class="container">
 		<div class="row">
-			<spring:url value="/school/edit" var="formUrl" />
-			<form:form modelAttribute="school" action="${formUrl}/${school.id}"
+			<spring:url value="/schoolClass/edit" var="formUrl" />
+			<form:form modelAttribute="schoolClass" action="${formUrl}/${schoolClass.id}"
 				method="post" cssClass="col-md-8 col-md-offset-2">
 
 				<div class="form-group">
-					<label for="school-id">Id</label>
-					<form:input id="school-id" cssClass="form-control" path="id"
+					<label for="schoolClass-id">Id</label>
+					<form:input id="schoolClass-id" cssClass="form-control" path="id"
 						disabled="true" />
 					<form:errors path="name" />
 				</div>
 
 				<div class="form-group">
-					<label for="school-name">Name</label>
-					<form:input id="school-name" cssClass="form-control" path="name" />
+					<label for="schoolClass-name">Name</label>
+					<form:input id="schoolClass-name" cssClass="form-control" path="name" />
 					<form:errors path="name" />
 				</div>
 
-				<div class="form-group">
-					<label for="school-postalCode">Postal Code</label>
-					<form:input id="school-postalCode" cssClass="form-control"
-						path="postalCode" />
-					<form:errors path="postalCode" />
-				</div>
-				
-				<button type="button" class="btn btn-default"
-					onclick="location.href='<spring:url value="/school/edit/${school.id}/schoolClass"/>'">School Classes</button>
-
 				<button type="submit" class="btn btn-default">Submit</button>
 				<button type="button" class="btn btn-default"
-					onclick="location.href='<spring:url value="/school/delete/${school.id}"/>'">Delete</button>
+					onclick="location.href='<spring:url value="/schoolClass/delete/${schoolClass.id}"/>'">Delete</button>
 
 			</form:form>
 		</div>
